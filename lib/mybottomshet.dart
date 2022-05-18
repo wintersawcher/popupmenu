@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:popupmenu/Count.dart';
 
 import 'enum.dart';
 import 'enum.dart';
@@ -12,12 +13,20 @@ class Mybottomshet extends StatefulWidget {
 class _MybottomshetState extends State<Mybottomshet> {
   String thu =  "";
   int tuois = 0;
+  Color color = Colors.white;
+  int count =0;
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       body : SafeArea(
         child: Column(
           children: [
+            ElevatedButton(
+                onPressed: () =>
+                    _onBottomSheet()
+                ,
+                child:Text("Bam vao")
+            ),
             Container(
                 //margin: EdgeInsets.only(top: 50),
                 child: Center(
@@ -27,15 +36,25 @@ class _MybottomshetState extends State<Mybottomshet> {
                         thu,style: TextStyle(color: Colors.red,fontSize: 20,
                       )
                         ,),
-                      Text(tuois.toString(),style: TextStyle(fontSize: 24),)
+                      Text(tuois.toString(),style: TextStyle(fontSize: 24),),
+                      Container(
+                        height: 50,
+                        width: 50,
+                        decoration: BoxDecoration(
+                            color: color
+                        ),
+                      ),
+                      Count(
+                        count: count,
+                        onCountChange: (int val) {
+                          print("khoong ai day em khi em buon em biet lam gi");
+                          setState(() => count +=val);
+
+    },
+                        onCountSelected: ()=> print("Selected tututut"),
+                      ),
                     ],
                   ),)),
-            ElevatedButton(
-                onPressed: () =>
-                  _onBottomSheet()
-                ,
-                child:Text("Bam vao")
-            )
           ],
         ),
       ),
@@ -80,7 +99,7 @@ class _MybottomshetState extends State<Mybottomshet> {
                         child: ListView.builder(
                           scrollDirection: Axis.horizontal,
                           shrinkWrap: true,
-                            itemCount: tuoi.length,
+                             itemCount: tuoi.length,
                             itemBuilder: (context,index){
                               return GestureDetector(
                                 onTap: (){
@@ -97,13 +116,41 @@ class _MybottomshetState extends State<Mybottomshet> {
                                       ]),
                                 ),
 
+                                   
                               );
                             }
                         ),
                       ),
                     ],
                   ),
+                  Container(
+                    height: 80,
 
+                    child: ListView.builder(
+                        shrinkWrap: true,
+                        scrollDirection: Axis.horizontal,
+                        itemCount: mausacyeuthich.length,
+                        itemBuilder: (context,index){
+                          return GestureDetector(
+                            onTap: (){
+                              setState(() {
+                                color=  mausacyeuthich[index];
+                              });
+                            },
+                            child: Container(
+                              margin: EdgeInsets.all(16),
+                              height: 20,
+                              width: 50,
+                              decoration: BoxDecoration(
+                                color: mausacyeuthich[index],
+                                borderRadius: BorderRadius.all(Radius.circular(1))
+                              ),
+                            ),
+                          );
+                        }
+                    ),
+                  ),
+                  SizedBox(height: 58,),
                 ],
               ),
             );
